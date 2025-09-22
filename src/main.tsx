@@ -5,9 +5,9 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import { Error } from "./errors/ErrorPage.tsx";
-import { Guest } from "./components/Guest.tsx";
-import { GuestDashboard } from "./components/GuestDashboard.tsx";
+import { Error } from "./modules/errors/ErrorPage.tsx";
+import { Guest } from "./modules/guests/pages/Guest.tsx";
+import { GuestDashboard } from "./modules/guests/pages/GuestDashboard.tsx";
 
 const router = createBrowserRouter([
   {

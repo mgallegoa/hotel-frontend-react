@@ -1,13 +1,13 @@
-import { Menu } from "./components/Menu";
+import { Menu } from "./modules/menu/pages/Menu";
 import { Outlet } from "react-router";
 
 function App() {
   return (
     <>
       <Menu />
-      <div className="container">
+      <main className="container">
         <Outlet />
-      </div>
+      </main>
     </>
   );
 }
