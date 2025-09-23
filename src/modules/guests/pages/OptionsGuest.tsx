@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 export const OptionsGuest = () => {
   return (
     <>
@@ -10,11 +12,11 @@ export const OptionsGuest = () => {
           <div
             className="btn-group"
             role="group"
-            aria-label="Edit Guest buttons group"
+            aria-label="Guest buttons group"
           >
-            <button type="button" className="btn btn-primary">
+            <Link className="btn btn-primary" to="guest/create">
               Create Guest
-            </button>
+            </Link>
           </div>
           <div className="input-group">
             <div className="input-group-text" id="SearchTextId">

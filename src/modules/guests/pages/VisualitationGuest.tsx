@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import type { GuestDTO } from "../types/GestDTO";
 
 export const VisualitationGuest = ({ guest }: { guest: GuestDTO }) => {
@@ -5,9 +6,9 @@ export const VisualitationGuest = ({ guest }: { guest: GuestDTO }) => {
     <article className="card col-12 col-md-4">
       <div className="card-header d-inline-flex justify-content-between align-items-center">
         <strong>{guest.firstName}</strong>
-        <button type="button" className="btn btn-primary">
+        <Link className="btn btn-primary" to={`guest/edit/${guest.id}`}>
           Edit Guest
-        </button>
+        </Link>
       </div>
       <div className="card-body">
         <label>

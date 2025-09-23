@@ -6,10 +6,14 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { Error } from "./modules/errors/ErrorPage.tsx";
-import { Guest } from "./modules/guests/pages/Guest.tsx";
 import { GuestDashboard } from "./modules/guests/pages/GuestDashboard.tsx";
+import { CreateEditGuest } from "./modules/guests/pages/CreateEditGuest.tsx";
 
 const router = createBrowserRouter([
+  // {
+  //   path: "/guest/edit/:id",
+  //   element: <CreateEditGuest guest={undefined} />,
+  // },
   {
     path: "/",
     element: <App />,
@@ -20,14 +24,14 @@ const router = createBrowserRouter([
         element: <GuestDashboard />,
       },
       {
-        path: "guest/:id",
-        element: <Guest />,
+        path: "guest/create",
+        element: <CreateEditGuest guest={undefined} />,
+      },
+      {
+        path: "guest/edit/:id",
+        element: <CreateEditGuest guest={undefined} />,
       },
     ],
-    // {
-    //   path: "guest/:id",
-    //   element: <Guest />,
-    // },
   },
 ]);
 
