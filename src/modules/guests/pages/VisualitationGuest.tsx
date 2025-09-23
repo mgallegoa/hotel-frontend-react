@@ -3,26 +3,33 @@ import type { GuestDTO } from "../types/GestDTO";
 export const VisualitationGuest = ({ guest }: { guest: GuestDTO }) => {
   return (
     <article className="card col-12 col-md-4">
-      <div className="card-header">
-        <h4>{guest.firstName}</h4>
+      <div className="card-header d-inline-flex justify-content-between align-items-center">
+        <strong>{guest.firstName}</strong>
+        <button type="button" className="btn btn-primary">
+          Edit Guest
+        </button>
       </div>
       <div className="card-body">
         <label>
           <strong>Name: </strong>
           <output name="Name">{guest.firstName}</output>
         </label>
+        <br />
         <label>
           <strong>Last Name: </strong>
           <output name="LastName">{guest.last_name}</output>
         </label>
+        <br />
         <label>
           <strong>Birth Day: </strong>
           <output name="BirthDay">{guest.birthDay}</output>
         </label>
+        <br />
         <label>
           <strong>Nationality: </strong>
           <output name="Nationality">{guest.nationality}</output>
         </label>
+        <br />
         <label>
           <strong>Reservations: </strong>
           <output name="ReservationsDto">
