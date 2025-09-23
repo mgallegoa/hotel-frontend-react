@@ -1,12 +1,42 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
 import type { GuestDTO } from "../types/GestDTO";
+import { getGuestService } from "../services/allGuest";
+import { MOCK_GUEST } from "../const/const";
+import { useParams } from "react-router";
 
-export const CreateEditGuest = ({ guest }: { guest: GuestDTO | undefined }) => {
+export const CreateEditGuest = () => {
   const [isLoadingGuestData, setIsLoadingGuestData] = useState<boolean>(true);
+  const [guest, setGuest] = useState<GuestDTO>(() => {
+    const guest = MOCK_GUEST;
+    guest.firstName = "";
+    guest.last_name = "";
+    return guest;
+  });
+  const params = useParams();
+
+  const getGuest = async (id: number) => {
+    setIsLoadingGuestData(true);
+    const [error, result] = await getGuestService(id);
+    setIsLoadingGuestData(false);
+    if (error) {
+      console.log(error);
+      return;
+    }
+    if (!result) {
+      return;
+    }
+    setGuest(result);
+  };
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setGuest((prev) => ({ ...prev, [name]: value }));
+  };
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    if (params.get("id")) {
+    const idNumber = parseInt(params.id ?? "NaN");
+    if (!isNaN(idNumber)) {
       console.log("loading data");
+      getGuest(idNumber);
     } else {
       setIsLoadingGuestData(false);
     }
@@ -26,7 +56,9 @@ export const CreateEditGuest = ({ guest }: { guest: GuestDTO | undefined }) => {
               className="form-control"
               id="nameInput"
               aria-describedby="nameHelp"
+              name="firstName"
               value={guest ? guest.firstName : ""}
+              onChange={handleChange}
             />
             <div id="nameHelp" className="form-text">
               Enter the name of the Guest
@@ -41,7 +73,9 @@ export const CreateEditGuest = ({ guest }: { guest: GuestDTO | undefined }) => {
               className="form-control"
               id="lastNameInput"
               aria-describedby="lastNameHelp"
+              name="last_name"
               value={guest ? guest.last_name : ""}
+              onChange={handleChange}
             />
             <div id="lastNameHelp" className="form-text">
               Enter the last name of the Guest
@@ -56,7 +90,9 @@ export const CreateEditGuest = ({ guest }: { guest: GuestDTO | undefined }) => {
               className="form-control"
               id="birthDayInput"
               aria-describedby="birthDayHelp"
+              name="birthDay"
               value={guest ? guest.birthDay : ""}
+              onChange={handleChange}
             />
             <div id="birthDayHelp" className="form-text">
               Enter the birth day of the Guest
@@ -71,7 +107,9 @@ export const CreateEditGuest = ({ guest }: { guest: GuestDTO | undefined }) => {
               className="form-control"
               id="nationalityInput"
               aria-describedby="nationalityHelp"
+              name="nationality"
               value={guest ? guest.nationality : ""}
+              onChange={handleChange}
             />
             <div id="nationalityHelp" className="form-text">
               Enter the nationality of the Guest

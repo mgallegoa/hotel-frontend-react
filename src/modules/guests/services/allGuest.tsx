@@ -1,4 +1,5 @@
 import type { Page } from "../../commun/types/Page";
+import type { GuestDTO } from "../types/GestDTO";
 import type { GuestDTOResponse } from "../types/GuestDTOResponse";
 
 export const getAllGuest = async ({
@@ -10,9 +11,27 @@ export const getAllGuest = async ({
       `http://localhost:8081/api/v1/guests/pageable?page=${page}&size=${size}`,
     );
     if (!response.ok) {
-      return [new Error("Error searching guest" + response.statusText)];
+      return [new Error("Error searching guests list" + response.statusText)];
     }
     const guestDTOResponse = (await response.json()) as GuestDTOResponse;
+    return [undefined, guestDTOResponse];
+  } catch (error) {
+    if (error instanceof Error) {
+      return [error];
+    }
+  }
+  return [new Error("Unknow Error")];
+};
+
+export const getGuestService = async (
+  id: number,
+): Promise<[Error?, GuestDTO?]> => {
+  try {
+    const response = await fetch(`http://localhost:8081/api/v1/guests/${id}`);
+    if (!response.ok) {
+      return [new Error("Error searching guest" + response.statusText)];
+    }
+    const guestDTOResponse = (await response.json()) as GuestDTO;
     return [undefined, guestDTOResponse];
   } catch (error) {
     if (error instanceof Error) {

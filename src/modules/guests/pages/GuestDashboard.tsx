@@ -6,15 +6,7 @@ import type { GuestDTOResponse } from "../types/GuestDTOResponse";
 import { getAllGuest } from "../services/allGuest";
 import type { Page } from "../../commun/types/Page";
 import type { GuestDTO } from "../types/GestDTO";
-
-const MOCK_GUEST: GuestDTO = {
-  id: 0,
-  firstName: "Select a Guest",
-  last_name: "Select a Guest",
-  birthDay: "-",
-  nationality: "-",
-  reservationsDto: [],
-};
+import { MOCK_GUEST } from "../const/const";
 
 export const GuestDashboard = () => {
   const [guestDTOResponse, setGuestDTOResponse] = useState<
