@@ -5,12 +5,27 @@ import { VisualitationGuest } from "./VisualitationGuest";
 import type { GuestDTOResponse } from "../types/GuestDTOResponse";
 import { getAllGuest } from "../services/allGuest";
 import type { Page } from "../../commun/types/Page";
+import type { GuestDTO } from "../types/GestDTO";
+
+const MOCK_GUEST: GuestDTO = {
+  id: 0,
+  firstName: "Select a Guest",
+  last_name: "Select a Guest",
+  birthDay: "-",
+  nationality: "-",
+  reservationsDto: [],
+};
 
 export const GuestDashboard = () => {
   const [guestDTOResponse, setGuestDTOResponse] = useState<
     GuestDTOResponse | undefined
   >(undefined);
   const [isLoadingGuestData, setIsLoadingGuestData] = useState<boolean>(false);
+  const [guest, setGuest] = useState<GuestDTO>(MOCK_GUEST);
+
+  const selectedGuest = (guest: GuestDTO) => {
+    setGuest(guest);
+  };
 
   const changePage = (pageNumber: number | undefined) => {
     const pageString = `${pageNumber}`;
@@ -48,11 +63,12 @@ export const GuestDashboard = () => {
         <OptionsGuest />
       </header>
       <section className="row pt-3">
-        <VisualitationGuest />
+        <VisualitationGuest guest={guest} />
         <ListGuest
           guestDTOResponse={guestDTOResponse}
           loadingData={isLoadingGuestData}
           changePage={changePage}
+          selectedGuest={selectedGuest}
         />
       </section>
     </>

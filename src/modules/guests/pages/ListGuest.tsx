@@ -1,14 +1,17 @@
 import { Link } from "react-router";
 import type { GuestDTOResponse } from "../types/GuestDTOResponse";
+import type { GuestDTO } from "../types/GestDTO";
 
 export const ListGuest = ({
   guestDTOResponse,
   loadingData,
   changePage,
+  selectedGuest,
 }: {
   guestDTOResponse: GuestDTOResponse | undefined;
   loadingData: boolean;
   changePage: (page: number | undefined) => void;
+  selectedGuest: (guest: GuestDTO) => void;
 }) => {
   return (
     <article className="col-12 col-md-8 table-responsive">
@@ -40,7 +43,7 @@ export const ListGuest = ({
             guestDTOResponse?.content.length > 0 &&
             guestDTOResponse.content.map((guest) => {
               return (
-                <tr key={guest.id}>
+                <tr key={guest.id} onClick={() => selectedGuest(guest)}>
                   <td scope="row">{guest.id}</td>
                   <td>{guest.firstName}</td>
                   <td>{guest.last_name}</td>
@@ -50,7 +53,7 @@ export const ListGuest = ({
             })}
         </tbody>
       </table>
-      <nav aria-label="Page navigation example">
+      <nav aria-label="Page navigation">
         <ul
           className={
             guestDTOResponse?.empty
