@@ -1,11 +1,14 @@
+import { Link } from "react-router";
 import type { GuestDTOResponse } from "../types/GuestDTOResponse";
 
 export const ListGuest = ({
   guestDTOResponse,
   loadingData,
+  changePage,
 }: {
   guestDTOResponse: GuestDTOResponse | undefined;
   loadingData: boolean;
+  changePage: (page: number | undefined) => void;
 }) => {
   return (
     <article className="col-12 col-md-8 table-responsive">
@@ -48,29 +51,76 @@ export const ListGuest = ({
         </tbody>
       </table>
       <nav aria-label="Page navigation example">
-        <ul className="pagination justify-content-center">
-          <li className="page-item disabled">
-            <a className="page-link">Previous</a>
+        <ul
+          className={
+            guestDTOResponse?.empty
+              ? "pagination justify-content-center disabled"
+              : "pagination justify-content-center"
+          }
+        >
+          <li
+            className={
+              guestDTOResponse?.first ? "page-item disabled" : "page-item"
+            }
+          >
+            <Link className="page-link" to="#">
+              Previous
+            </Link>
+          </li>
+          <li
+            className={
+              guestDTOResponse?.first ? "page-item disabled" : "page-item"
+            }
+          >
+            <Link
+              className="page-link"
+              to={`/?page=${guestDTOResponse?.number}`}
+              onClick={() =>
+                changePage(guestDTOResponse ? guestDTOResponse.number + 1 : 1)
+              }
+            >
+              {guestDTOResponse?.number === undefined ||
+              guestDTOResponse?.number === 0
+                ? 1
+                : guestDTOResponse?.number}
+            </Link>
           </li>
           <li className="page-item">
-            <a className="page-link" href="#">
-              1
-            </a>
+            <Link
+              className="page-link"
+              to={`/?page=${2}`}
+              onClick={() =>
+                changePage(guestDTOResponse ? guestDTOResponse.number + 1 : 2)
+              }
+            >
+              {guestDTOResponse?.number === undefined ||
+              guestDTOResponse?.number === 0
+                ? 2
+                : guestDTOResponse?.number + 1}
+            </Link>
           </li>
           <li className="page-item">
-            <a className="page-link" href="#">
-              2
-            </a>
+            <Link
+              className="page-link"
+              to={`/?page=${3}`}
+              onClick={() =>
+                changePage(guestDTOResponse ? guestDTOResponse.number + 2 : 3)
+              }
+            >
+              {guestDTOResponse?.number === undefined ||
+              guestDTOResponse?.number === 0
+                ? 3
+                : guestDTOResponse?.number + 2}
+            </Link>
           </li>
-          <li className="page-item">
-            <a className="page-link" href="#">
-              3
-            </a>
-          </li>
-          <li className="page-item">
-            <a className="page-link" href="#">
+          <li
+            className={
+              guestDTOResponse?.last ? "page-item disabled" : "page-item"
+            }
+          >
+            <Link className="page-link" to="#">
               Next
-            </a>
+            </Link>
           </li>
         </ul>
       </nav>
