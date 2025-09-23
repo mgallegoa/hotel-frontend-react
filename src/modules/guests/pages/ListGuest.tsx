@@ -63,7 +63,13 @@ export const ListGuest = ({
               guestDTOResponse?.first ? "page-item disabled" : "page-item"
             }
           >
-            <Link className="page-link" to="#">
+            <Link
+              className="page-link"
+              to={`/?page=${guestDTOResponse && guestDTOResponse.number > 1 ? guestDTOResponse.number - 1 : 1}`}
+              onClick={() =>
+                changePage(guestDTOResponse ? guestDTOResponse.number - 1 : 1)
+              }
+            >
               Previous
             </Link>
           </li>
@@ -74,43 +80,15 @@ export const ListGuest = ({
           >
             <Link
               className="page-link"
-              to={`/?page=${guestDTOResponse?.number}`}
+              to={`/?page=${guestDTOResponse ? guestDTOResponse.number + 1 : 1}`}
               onClick={() =>
                 changePage(guestDTOResponse ? guestDTOResponse.number + 1 : 1)
               }
             >
-              {guestDTOResponse?.number === undefined ||
-              guestDTOResponse?.number === 0
+              {guestDTOResponse === undefined ||
+              guestDTOResponse?.number === undefined
                 ? 1
-                : guestDTOResponse?.number}
-            </Link>
-          </li>
-          <li className="page-item">
-            <Link
-              className="page-link"
-              to={`/?page=${2}`}
-              onClick={() =>
-                changePage(guestDTOResponse ? guestDTOResponse.number + 1 : 2)
-              }
-            >
-              {guestDTOResponse?.number === undefined ||
-              guestDTOResponse?.number === 0
-                ? 2
-                : guestDTOResponse?.number + 1}
-            </Link>
-          </li>
-          <li className="page-item">
-            <Link
-              className="page-link"
-              to={`/?page=${3}`}
-              onClick={() =>
-                changePage(guestDTOResponse ? guestDTOResponse.number + 2 : 3)
-              }
-            >
-              {guestDTOResponse?.number === undefined ||
-              guestDTOResponse?.number === 0
-                ? 3
-                : guestDTOResponse?.number + 2}
+                : guestDTOResponse.number + 1}
             </Link>
           </li>
           <li
@@ -118,7 +96,49 @@ export const ListGuest = ({
               guestDTOResponse?.last ? "page-item disabled" : "page-item"
             }
           >
-            <Link className="page-link" to="#">
+            <Link
+              className="page-link"
+              to={`/?page=${guestDTOResponse ? guestDTOResponse.number + 2 : 2}`}
+              onClick={() =>
+                changePage(guestDTOResponse ? guestDTOResponse.number + 2 : 2)
+              }
+            >
+              {guestDTOResponse === undefined ||
+              guestDTOResponse?.number === undefined
+                ? 2
+                : guestDTOResponse.number + 2}
+            </Link>
+          </li>
+          <li
+            className={
+              guestDTOResponse?.last ? "page-item disabled" : "page-item"
+            }
+          >
+            <Link
+              className="page-link"
+              to={`/?page=${guestDTOResponse ? guestDTOResponse.number + 3 : 3}`}
+              onClick={() =>
+                changePage(guestDTOResponse ? guestDTOResponse.number + 3 : 3)
+              }
+            >
+              {guestDTOResponse === undefined ||
+              guestDTOResponse?.number === undefined
+                ? 3
+                : guestDTOResponse.number + 3}
+            </Link>
+          </li>
+          <li
+            className={
+              guestDTOResponse?.last ? "page-item disabled" : "page-item"
+            }
+          >
+            <Link
+              className="page-link"
+              to={`/?page=${guestDTOResponse ? guestDTOResponse.number + 4 : 4}`}
+              onClick={() =>
+                changePage(guestDTOResponse ? guestDTOResponse.number + 4 : 4)
+              }
+            >
               Next
             </Link>
           </li>
