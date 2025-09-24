@@ -62,7 +62,7 @@ export const CreateEditGuest = () => {
     <article className="mt-3 col-12">
       {isLoadingGuestData && <p>Loading data....</p>}
       {!isLoadingGuestData && (
-        <form className="col-md-8 col-lg-6" onSubmit={handleSubmit}>
+        <form className="col-md-9 col-lg-7" onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="nameInput" className="form-label">
               Name:
@@ -135,35 +135,63 @@ export const CreateEditGuest = () => {
             <label htmlFor="reservationsInput" className="form-label">
               Reservations:
             </label>
-            <output name="ReservationsDto" id="reservationsInput">
-              {!guest ||
-                !guest.reservationsDto ||
-                (guest.reservationsDto.length < 1 && <p>No Reservations</p>)}
-              {guest &&
-                guest.reservationsDto &&
-                guest.reservationsDto.length > 0 && (
-                  <ul>
-                    {guest.reservationsDto.map((reservation) => {
-                      return (
-                        <li key={reservation.id}>
-                          <p>
-                            <strong>Date In: </strong>
-                            {reservation.dateIn}
-                          </p>
-                          <p>
-                            <strong>Date Out: </strong>
-                            {reservation.dateOut}
-                          </p>
-                          <p>
-                            <strong>Cost: </strong>
-                            {reservation.costToPay}
-                          </p>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                )}
-            </output>
+            {!guest ||
+              !guest.reservationsDto ||
+              (guest.reservationsDto.length < 1 && <p>No Reservations</p>)}
+            {guest &&
+              guest.reservationsDto &&
+              guest.reservationsDto.length > 0 && (
+                <ul className="list-group">
+                  {guest.reservationsDto.map((reservation) => {
+                    return (
+                      <li
+                        key={reservation.id}
+                        className="list-group-item list-group-item-action"
+                      >
+                        <p>
+                          <strong>Date In: </strong>
+                          {reservation.dateIn}
+                        </p>
+                        <p>
+                          <strong>Date Out: </strong>
+                          {reservation.dateOut}
+                        </p>
+                        <p>
+                          <strong>Cost: </strong>
+                          {reservation.costToPay}
+                        </p>
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+            <div className="row md-3 ps-0">
+              <div className="col-auto">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Date In"
+                />
+              </div>
+              <div className="col-auto">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Date Out"
+                />
+              </div>
+
+              <div className="col-auto">
+                <input
+                  type="number"
+                  className="form-control"
+                  placeholder="Cost"
+                />
+              </div>
+              <div className="col-auto">
+                <input type="submit" className="btn btn-success" />
+              </div>
+            </div>
           </div>
           <div className="mb-3">
             <input type="submit" className="btn btn-primary" />
