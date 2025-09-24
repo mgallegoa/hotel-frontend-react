@@ -65,6 +65,35 @@ export const CreateEditGuest = () => {
     setReservation(() => MOCK_RESERVATION);
   };
 
+  const handleDeleteReservation = (
+    e: MouseEvent<HTMLImageElement>,
+    reservation: ReservationDTO,
+  ) => {
+    e.preventDefault();
+    setGuest((prev) => ({
+      ...prev,
+      reservationsDto: prev.reservationsDto.filter(
+        (r) => r.id != reservation.id && r.dateIn != reservation.dateIn,
+      ),
+    }));
+  };
+
+  const handleUpdateReservation = (
+    e: MouseEvent<HTMLImageElement>,
+    reservation: ReservationDTO,
+  ) => {
+    e.preventDefault();
+    // setGuest((prev) => ({
+    //   ...prev,
+    //   reservationsDto: prev.reservationsDto.map((r) =>
+    //     r.id != reservation.id && r.dateIn != reservation.dateIn
+    //       ? { ...r, reservation }
+    //       : r,
+    //   ),
+    // }));
+    setReservation((prev) => ({ ...prev, reservation }));
+  };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const [error, guestDTOResponse] = await createEditGuest(guest.id, guest);
@@ -201,12 +230,18 @@ export const CreateEditGuest = () => {
                             width={20}
                             alt="delete"
                             className="rounded-3 bg-danger-subtle"
+                            onClick={(e) =>
+                              handleDeleteReservation(e, reservation)
+                            }
                           />
                           <img
                             src={UpdateIcon}
                             width={20}
                             alt="delete"
                             className="rounded-3 bg-success-subtle"
+                            onClick={(e) =>
+                              handleUpdateReservation(e, reservation)
+                            }
                           />
                         </td>
                       </tr>
