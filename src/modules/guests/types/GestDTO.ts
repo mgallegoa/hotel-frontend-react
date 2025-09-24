@@ -1,7 +1,7 @@
 import type { ReservationDTO } from "../../reservations/types/ReservationDTO";
 
 export type GuestDTO = {
-  id: number;
+  id: number | null;
   firstName: string;
   last_name: string;
   birthDay: string;

@@ -1,7 +1,7 @@
 import type { GuestDTO } from "../types/GestDTO";
 
 export const createEditGuest = async (
-  id: number,
+  id: number | null,
   guest: GuestDTO,
 ): Promise<[Error?, GuestDTO?]> => {
   try {
