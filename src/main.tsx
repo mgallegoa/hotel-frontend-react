@@ -25,11 +25,11 @@ const router = createBrowserRouter([
       },
       {
         path: "guest/create",
-        element: <CreateEditGuest guest={undefined} />,
+        element: <CreateEditGuest />,
       },
       {
         path: "guest/edit/:id",
-        element: <CreateEditGuest guest={undefined} />,
+        element: <CreateEditGuest />,
       },
     ],
   },

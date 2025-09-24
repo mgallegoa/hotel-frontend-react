@@ -12,6 +12,8 @@ import { useParams } from "react-router";
 import { createEditGuest } from "../services/createEditGuest";
 import { toast } from "sonner";
 import type { ReservationDTO } from "../../reservations/types/ReservationDTO";
+import DeleteIcon from "../../../assets/delete-svgrepo-com.svg";
+import UpdateIcon from "../../../assets/update-svgrepo-com.svg";
 
 export const CreateEditGuest = () => {
   const [isLoadingGuestData, setIsLoadingGuestData] = useState<boolean>(true);
@@ -47,7 +49,20 @@ export const CreateEditGuest = () => {
 
   const handleAddReservation = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    guest.reservationsDto.push(reservation);
+    const existDateIn = guest.reservationsDto.find(
+      (res) => res.dateIn === reservation.dateIn,
+    );
+    if (existDateIn) {
+      toast.error(
+        `The reservation with the date ${reservation.dateIn} exist for the guest.`,
+      );
+      return;
+    }
+    setGuest((prev) => ({
+      ...prev,
+      reservationsDto: [...prev.reservationsDto, { ...reservation }],
+    }));
+    setReservation(() => MOCK_RESERVATION);
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -146,35 +161,61 @@ export const CreateEditGuest = () => {
             </div>
           </div>
           <div className="mb-3 border border-primary">
-            <label htmlFor="reservationsInput" className="form-label">
+            <label htmlFor="reservationsData" className="form-label">
               Reservations:
             </label>
-            {!guest ||
-              !guest.reservationsDto ||
-              (guest.reservationsDto.length < 1 && <p>No Reservations</p>)}
-            {guest &&
-              guest.reservationsDto &&
-              guest.reservationsDto.length > 0 && (
-                <ul className="list-group">
-                  {guest.reservationsDto.map((reservation) => {
+            <table
+              className="table table-striped table-hover"
+              id="reservationsData"
+            >
+              <thead>
+                <tr className="table-primary">
+                  <th scope="col">Date In</th>
+                  <th scope="col">Date Out</th>
+                  <th scope="col">Cost</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody className="table-group-divider">
+                {!guest ||
+                  !guest.reservationsDto ||
+                  (guest.reservationsDto.length < 1 && (
+                    <tr>
+                      <td>
+                        <p>No Reservations</p>
+                      </td>
+                    </tr>
+                  ))}
+                {guest &&
+                  guest.reservationsDto &&
+                  guest.reservationsDto.length > 0 &&
+                  guest.reservationsDto.map((reservation) => {
                     return (
-                      <li
-                        key={reservation.id}
-                        className="list-group-item list-group-item-action"
-                      >
-                        <strong>Date In: </strong>
-                        {reservation.dateIn}
-                        <strong>Date Out: </strong>
-                        {reservation.dateOut}
-                        <strong>Cost: </strong>
-                        {reservation.costToPay}
-                      </li>
+                      <tr key={reservation.id + reservation.dateIn}>
+                        <td scope="row">{reservation.dateIn}</td>
+                        <td>{reservation.dateOut}</td>
+                        <td>{reservation.costToPay}</td>
+                        <td>
+                          <img
+                            src={DeleteIcon}
+                            width={20}
+                            alt="delete"
+                            className="rounded-3 bg-danger-subtle"
+                          />
+                          <img
+                            src={UpdateIcon}
+                            width={20}
+                            alt="delete"
+                            className="rounded-3 bg-success-subtle"
+                          />
+                        </td>
+                      </tr>
                     );
                   })}
-                </ul>
-              )}
+              </tbody>
+            </table>
             <div className="row mb-3 mt-2 pe-0">
-              <div className="mb-1 ps-3 col-auto col-sm-3">
+              <div className="mb-1 ps-3 col-auto col-sm-4">
                 <input
                   type="date"
                   className="form-control"
@@ -182,7 +223,7 @@ export const CreateEditGuest = () => {
                   onChange={(e) => (reservation.dateIn = e.target.value)}
                 />
               </div>
-              <div className="mb-1 ps-3 ps-sm-1 col-auto col-sm-3">
+              <div className="mb-1 ps-3 ps-sm-1 col-auto col-sm-4">
                 <input
                   type="date"
                   className="form-control"
@@ -191,10 +232,10 @@ export const CreateEditGuest = () => {
                 />
               </div>
 
-              <div className="mb-1 ps-3 ps-sm-1 col-auto col-sm-3">
+              <div className="mb-1 ps-3 ps-sm-1 col-auto col-sm-2 pe-sm-1">
                 <input
                   type="number"
-                  className="form-control"
+                  className="form-control pe-sm-0"
                   placeholder="Cost"
                   onChange={(e) => (reservation.costToPay = e.target.value)}
                 />
