@@ -42,26 +42,20 @@ export const VisualitationGuest = ({ guest }: { guest: GuestDTO }) => {
             {!guest.reservationsDto ||
               (guest.reservationsDto.length < 1 && <p>No Reservations</p>)}
             {guest.reservationsDto && guest.reservationsDto.length > 0 && (
-              <ul>
+              <ol>
                 {guest.reservationsDto.map((reservation) => {
                   return (
                     <li key={reservation.id}>
-                      <p>
-                        <strong>Date In: </strong>
-                        {reservation.dateIn}
-                      </p>
-                      <p>
-                        <strong>Date Out: </strong>
-                        {reservation.dateOut}
-                      </p>
-                      <p>
-                        <strong>Cost: </strong>
-                        {reservation.costToPay}
-                      </p>
+                      <strong>Date In: </strong>
+                      {reservation.dateIn}
+                      <strong> Date Out: </strong>
+                      {reservation.dateOut}
+                      <strong> Cost: </strong>
+                      {reservation.costToPay}
                     </li>
                   );
                 })}
-              </ul>
+              </ol>
             )}
           </output>
         </label>

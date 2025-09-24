@@ -1,5 +1,5 @@
 export type ReservationDTO = {
-  id: number;
+  id: number | null;
   dateIn: string;
   dateOut: string;
   costToPay: string;

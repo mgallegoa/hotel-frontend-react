@@ -1,10 +1,17 @@
-import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
+import {
+  useEffect,
+  useState,
+  type ChangeEvent,
+  type FormEvent,
+  type MouseEvent,
+} from "react";
 import type { GuestDTO } from "../types/GestDTO";
 import { getGuestService } from "../services/allGuest";
-import { MOCK_GUEST } from "../const/const";
+import { MOCK_GUEST, MOCK_RESERVATION } from "../const/const";
 import { useParams } from "react-router";
 import { createEditGuest } from "../services/createEditGuest";
 import { toast } from "sonner";
+import type { ReservationDTO } from "../../reservations/types/ReservationDTO";
 
 export const CreateEditGuest = () => {
   const [isLoadingGuestData, setIsLoadingGuestData] = useState<boolean>(true);
@@ -14,6 +21,8 @@ export const CreateEditGuest = () => {
     guest.last_name = "";
     return guest;
   });
+  const [reservation, setReservation] =
+    useState<ReservationDTO>(MOCK_RESERVATION);
   const params = useParams();
 
   const getGuest = async (id: number) => {
@@ -34,6 +43,11 @@ export const CreateEditGuest = () => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setGuest((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleAddReservation = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    guest.reservationsDto.push(reservation);
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -131,7 +145,7 @@ export const CreateEditGuest = () => {
               Enter the nationality of the Guest
             </div>
           </div>
-          <div className="mb-3">
+          <div className="mb-3 border border-primary">
             <label htmlFor="reservationsInput" className="form-label">
               Reservations:
             </label>
@@ -148,48 +162,50 @@ export const CreateEditGuest = () => {
                         key={reservation.id}
                         className="list-group-item list-group-item-action"
                       >
-                        <p>
-                          <strong>Date In: </strong>
-                          {reservation.dateIn}
-                        </p>
-                        <p>
-                          <strong>Date Out: </strong>
-                          {reservation.dateOut}
-                        </p>
-                        <p>
-                          <strong>Cost: </strong>
-                          {reservation.costToPay}
-                        </p>
+                        <strong>Date In: </strong>
+                        {reservation.dateIn}
+                        <strong>Date Out: </strong>
+                        {reservation.dateOut}
+                        <strong>Cost: </strong>
+                        {reservation.costToPay}
                       </li>
                     );
                   })}
                 </ul>
               )}
-            <div className="row md-3 ps-0">
-              <div className="col-auto">
+            <div className="row mb-3 mt-2 pe-0">
+              <div className="mb-1 ps-3 col-auto col-sm-3">
                 <input
-                  type="text"
+                  type="date"
                   className="form-control"
                   placeholder="Date In"
+                  onChange={(e) => (reservation.dateIn = e.target.value)}
                 />
               </div>
-              <div className="col-auto">
+              <div className="mb-1 ps-3 ps-sm-1 col-auto col-sm-3">
                 <input
-                  type="text"
+                  type="date"
                   className="form-control"
                   placeholder="Date Out"
+                  onChange={(e) => (reservation.dateOut = e.target.value)}
                 />
               </div>
 
-              <div className="col-auto">
+              <div className="mb-1 ps-3 ps-sm-1 col-auto col-sm-3">
                 <input
                   type="number"
                   className="form-control"
                   placeholder="Cost"
+                  onChange={(e) => (reservation.costToPay = e.target.value)}
                 />
               </div>
-              <div className="col-auto">
-                <input type="submit" className="btn btn-success" />
+              <div className="ps-3 ps-sm-1 col-auto col-md-2">
+                <button
+                  className="btn btn-success"
+                  onClick={handleAddReservation}
+                >
+                  Add
+                </button>
               </div>
             </div>
           </div>
