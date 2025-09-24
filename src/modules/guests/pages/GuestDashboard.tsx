@@ -7,6 +7,7 @@ import { getAllGuest } from "../services/allGuest";
 import type { Page } from "../../commun/types/Page";
 import type { GuestDTO } from "../types/GestDTO";
 import { MOCK_GUEST } from "../const/const";
+import { toast } from "sonner";
 
 export const GuestDashboard = () => {
   const [guestDTOResponse, setGuestDTOResponse] = useState<
@@ -33,8 +34,10 @@ export const GuestDashboard = () => {
     const [error, guestDTOResponse] = await getAllGuest(page);
     setIsLoadingGuestData(false);
     if (error) {
+      toast.error(error.message);
       return;
     }
+    toast.success("Data loaded.");
     setGuestDTOResponse(guestDTOResponse);
   };
 

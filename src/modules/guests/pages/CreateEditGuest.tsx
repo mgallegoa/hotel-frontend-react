@@ -4,6 +4,7 @@ import { getGuestService } from "../services/allGuest";
 import { MOCK_GUEST } from "../const/const";
 import { useParams } from "react-router";
 import { createEditGuest } from "../services/createEditGuest";
+import { toast } from "sonner";
 
 export const CreateEditGuest = () => {
   const [isLoadingGuestData, setIsLoadingGuestData] = useState<boolean>(true);
@@ -20,8 +21,10 @@ export const CreateEditGuest = () => {
     const [error, result] = await getGuestService(id);
     setIsLoadingGuestData(false);
     if (error) {
+      toast.error(error.message);
       return;
     }
+    toast.success("Data loaded.");
     if (!result) {
       return;
     }
@@ -37,8 +40,10 @@ export const CreateEditGuest = () => {
     e.preventDefault();
     const [error, guestDTOResponse] = await createEditGuest(guest.id, guest);
     if (error) {
+      toast.error(error.message);
       return;
     }
+    toast.success("Data saved succefully.");
     if (!guestDTOResponse) {
       return;
     }
@@ -106,7 +111,7 @@ export const CreateEditGuest = () => {
               onChange={handleChange}
             />
             <div id="birthDayHelp" className="form-text">
-              Enter the birth day of the Guest
+              Enter the birth day of the Guest, max 8 numbers
             </div>
           </div>
           <div className="mb-3">

@@ -6,7 +6,12 @@ export const VisualitationGuest = ({ guest }: { guest: GuestDTO }) => {
     <article className="card col-12 col-md-4">
       <div className="card-header d-inline-flex justify-content-between align-items-center">
         <strong>{guest.firstName}</strong>
-        <Link className="btn btn-primary" to={`guest/edit/${guest.id}`}>
+        <Link
+          className={
+            guest.id < 1 ? "btn btn-primary disabled" : "btn btn-primary"
+          }
+          to={`guest/edit/${guest.id}`}
+        >
           Edit Guest
         </Link>
       </div>

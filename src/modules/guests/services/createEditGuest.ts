@@ -23,7 +23,12 @@ export const createEditGuest = async (
       body: JSON.stringify(guest),
     });
     if (!response.ok) {
-      return [new Error(`Error ${action} the guest` + response.statusText)];
+      return [
+        new Error(
+          `Error ${action} the guest, please check the data` +
+            response.statusText,
+        ),
+      ];
     }
     const guestDTOResponse = (await response.json()) as GuestDTO;
     return [undefined, guestDTOResponse];
