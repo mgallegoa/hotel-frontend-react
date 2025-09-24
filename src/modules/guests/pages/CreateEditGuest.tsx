@@ -1,8 +1,9 @@
-import { useEffect, useState, type ChangeEvent } from "react";
+import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import type { GuestDTO } from "../types/GestDTO";
 import { getGuestService } from "../services/allGuest";
 import { MOCK_GUEST } from "../const/const";
 import { useParams } from "react-router";
+import { createEditGuest } from "../services/createEditGuest";
 
 export const CreateEditGuest = () => {
   const [isLoadingGuestData, setIsLoadingGuestData] = useState<boolean>(true);
@@ -19,7 +20,6 @@ export const CreateEditGuest = () => {
     const [error, result] = await getGuestService(id);
     setIsLoadingGuestData(false);
     if (error) {
-      console.log(error);
       return;
     }
     if (!result) {
@@ -32,10 +32,21 @@ export const CreateEditGuest = () => {
     const { name, value } = e.target;
     setGuest((prev) => ({ ...prev, [name]: value }));
   };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const [error, guestDTOResponse] = await createEditGuest(guest.id, guest);
+    if (error) {
+      return;
+    }
+    if (!guestDTOResponse) {
+      return;
+    }
+    setGuest(guestDTOResponse);
+  };
   useEffect(() => {
     const idNumber = parseInt(params.id ?? "NaN");
     if (!isNaN(idNumber)) {
-      console.log("loading data");
       getGuest(idNumber);
     } else {
       setIsLoadingGuestData(false);
@@ -46,7 +57,7 @@ export const CreateEditGuest = () => {
     <article className="mt-3 col-12">
       {isLoadingGuestData && <p>Loading data....</p>}
       {!isLoadingGuestData && (
-        <form className="col-md-8 col-lg-6">
+        <form className="col-md-8 col-lg-6" onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="nameInput" className="form-label">
               Name:
@@ -148,6 +159,9 @@ export const CreateEditGuest = () => {
                   </ul>
                 )}
             </output>
+          </div>
+          <div className="mb-3">
+            <input type="submit" className="btn btn-primary" />
           </div>
         </form>
       )}
