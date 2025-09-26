@@ -40,3 +40,11 @@
 .read-the-docs {
   color: #888;
 }
+
+.grow-on-hover {
+  transition: transform 0.5s ease;
+}
+.grow-on-hover:hover {
+  width: 22px;
+  transform: scale(1.05);
+}

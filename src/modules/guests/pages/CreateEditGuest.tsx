@@ -13,7 +13,7 @@ import { createEditGuest } from "../services/createEditGuest";
 import { toast } from "sonner";
 import type { ReservationDTO } from "../../reservations/types/ReservationDTO";
 import DeleteIcon from "../../../assets/delete-svgrepo-com.svg";
-import UpdateIcon from "../../../assets/update-svgrepo-com.svg";
+import UpdateIcon from "../../../assets/pen-square-svgrepo-com.svg";
 
 export const CreateEditGuest = () => {
   const [isLoadingGuestData, setIsLoadingGuestData] = useState<boolean>(true);
@@ -229,7 +229,7 @@ export const CreateEditGuest = () => {
                             src={DeleteIcon}
                             width={20}
                             alt="delete"
-                            className="rounded-3 bg-danger-subtle"
+                            className="rounded-3 bg-danger-subtle grow-on-hover"
                             onClick={(e) =>
                               handleDeleteReservation(e, reservation)
                             }
@@ -238,7 +238,7 @@ export const CreateEditGuest = () => {
                             src={UpdateIcon}
                             width={20}
                             alt="delete"
-                            className="rounded-3 bg-success-subtle"
+                            className="rounded-3 bg-success-subtle grow-on-hover"
                             onClick={(e) =>
                               handleUpdateReservation(e, reservation)
                             }

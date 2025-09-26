@@ -1,6 +1,7 @@
 import { Toaster } from "sonner";
 import { Menu } from "./modules/menu/pages/Menu";
 import { Outlet } from "react-router";
+import "./App.css";
 
 function App() {
   return (
