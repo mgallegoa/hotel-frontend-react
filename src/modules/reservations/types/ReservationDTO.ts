@@ -3,4 +3,5 @@ export type ReservationDTO = {
   dateIn: string;
   dateOut: string;
   costToPay: string;
+  enableEdit: boolean;
 };
