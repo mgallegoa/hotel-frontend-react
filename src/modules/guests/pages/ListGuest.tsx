@@ -2,16 +2,18 @@ import { Link } from "react-router";
 import type { GuestDTOResponse } from "../types/GuestDTOResponse";
 import type { GuestDTO } from "../types/GestDTO";
 
-export const ListGuest = ({
-  guestDTOResponse,
-  loadingData,
-  changePage,
-  selectedGuest,
-}: {
+interface Props {
   guestDTOResponse: GuestDTOResponse | undefined;
   loadingData: boolean;
   changePage: (page: number | undefined) => void;
   selectedGuest: (guest: GuestDTO) => void;
+}
+
+export const ListGuest: React.FC<Props> = ({
+  guestDTOResponse,
+  loadingData,
+  changePage,
+  selectedGuest,
 }) => {
   return (
     <article className="col-12 col-md-8 table-responsive">
