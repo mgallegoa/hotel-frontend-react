@@ -1,14 +1,20 @@
 import { Link } from "react-router";
 import type { GuestDTO } from "../types/GestDTO";
 
-export const VisualitationGuest = ({ guest }: { guest: GuestDTO }) => {
+interface Props {
+  guest: GuestDTO;
+}
+
+export const VisualitationGuest: React.FC<Props> = ({ guest }) => {
   return (
     <article className="card col-12 col-md-4">
       <div className="card-header d-inline-flex justify-content-between align-items-center">
         <strong>{guest.firstName}</strong>
         <Link
           className={
-            guest.id < 1 ? "btn btn-primary disabled" : "btn btn-primary"
+            guest.id === null || guest.id < 1
+              ? "btn btn-primary disabled"
+              : "btn btn-primary"
           }
           to={`guest/edit/${guest.id}`}
         >
